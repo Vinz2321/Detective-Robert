@@ -9,12 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/Starting Screen.unity
+    path: Assets/Scenes/Starting Screen.unity
     guid: 5d50494834092784aa1636f204f095c8
   - enabled: 1
-    path: Assets/LoadingScreen.unity
+    path: Assets/Scenes/LoadingScreen.unity
     guid: 814712db565c97d4bae849438f79f5ef
   - enabled: 1
-    path: Assets/player animation.unity
+    path: Assets/Scenes/Main Menu.unity
+    guid: 9adf92f7538f6e7488b5559661311058
+  - enabled: 1
+    path: Assets/Scenes/player animation.unity
     guid: f1418801f2033e04c8e9c18c6499c9e0
   m_configObjects: {}
