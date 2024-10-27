@@ -20,4 +20,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/player animation.unity
     guid: f1418801f2033e04c8e9c18c6499c9e0
+  - enabled: 1
+    path: Assets/Scenes/Level Selection.unity
+    guid: 69479fe01490fdf4a846c71e8f6f8b3f
+  - enabled: 1
+    path: Assets/Scenes/Tutorial.unity
+    guid: f9e223b8727d2b1499b948eddb19aaf5
   m_configObjects: {}
