@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    
+     public JoystickScript joystickScript;
     public float moveSpeed = 5f;
 
     public Rigidbody2D rb;
@@ -15,8 +15,8 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        movement.x = Input.GetAxisRaw("Horizontal");
-        movement.y = Input.GetAxisRaw("Vertical");
+        movement.x = joystickScript.joystickVec.x;
+        movement.y = joystickScript.joystickVec.y;
 
         animator.SetFloat("Horizontal", movement.x);
         animator.SetFloat("Vertical", movement.y);
