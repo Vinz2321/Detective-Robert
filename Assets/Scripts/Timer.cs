@@ -5,12 +5,12 @@ using UnityEngine.UI;
 public class CountDown : MonoBehaviour
 {
     [SerializeField] Text timeText;
-    [SerializeField] float duration, currentTime;
+    [SerializeField] float duration; // duration in minutes
+    private float currentTime;
 
     void Start()
     {
-        currentTime = duration;
-        timeText.text = currentTime.ToString();
+        currentTime = duration * 60; // convert duration to seconds
         StartCoroutine(TimeIEn());
     }
 
@@ -18,11 +18,14 @@ public class CountDown : MonoBehaviour
     {
         while (currentTime >= 0)
         {
-            timeText.text = currentTime.ToString();
+            int minutes = Mathf.FloorToInt(currentTime / 60); // calculate minutes
+            int seconds = Mathf.FloorToInt(currentTime % 60); // calculate seconds
+
+            timeText.text = string.Format("{0:00}:{1:00}", minutes, seconds); // format as MM:SS
             yield return new WaitForSeconds(1f);
             currentTime--;
         }
-        
-        timeText.text = "";  
+
+        timeText.text = "00:00"; // display 00:00 when timer ends
     }
 }
