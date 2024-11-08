@@ -7,7 +7,7 @@ public class Item : MonoBehaviour
    private void OnTriggerEnter2D(Collider2D other)
    {
      Debug.Log("Collided with: " + other.name);
-    if (other.CompareTag("Collectible"))
+    if (other.CompareTag("Evidence"))
     {
         collectItem(other.gameObject);
     }
