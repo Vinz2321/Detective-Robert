@@ -18,10 +18,14 @@ public class PlayerMovement : MonoBehaviour
     public float staminaRegenRate = 25f;    // Stamina regen per second
     private float currentStamina;
 
-    
     private bool isBoosting = false;
 
     private Vector2 movement;
+
+    // Audio variables
+    public AudioClip sprintSound; // Sprint sound clip
+    public AudioClip walkSound;  // Walking sound clip
+    private AudioSource audioSource;
 
     void Start()
     {
@@ -33,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
             staminaSlider.maxValue = maxStamina;
             staminaSlider.value = currentStamina; // Set slider value to match current stamina
         }
+
+        // Initialize the audio source
+        audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     void Update()
@@ -68,9 +75,30 @@ public class PlayerMovement : MonoBehaviour
         {
             staminaSlider.value = currentStamina;
         }
+
+        // Listen for input to start or stop boosting
+        if (Input.GetButtonDown("Sprint")) // Replace with your actual input button for sprint
+        {
+            StartBoost();
+        }
+
+        if (Input.GetButtonUp("Sprint")) // Replace with your actual input button for sprint
+        {
+            StopBoost();
+        }
+
+        // Play walking sound if moving
+        if (movement.sqrMagnitude > 0.1f && !isBoosting) // Only play walking sound if moving and not boosting
+        {
+            PlayWalkingSound();
+        }
+        else if (movement.sqrMagnitude == 0 && !isBoosting) // Stop walking sound if idle
+        {
+            StopWalkingSound();
+        }
     }
 
-    void FixedUpdate() 
+    void FixedUpdate()
     {
         if (rb != null)
         {
@@ -86,6 +114,16 @@ public class PlayerMovement : MonoBehaviour
         if (currentStamina > 0) // Start boost only if there is stamina left
         {
             isBoosting = true;
+
+            // Play the sprint sound if it's set
+            if (sprintSound != null && !audioSource.isPlaying) // Prevent sound from playing again if it's already playing
+            {
+                audioSource.PlayOneShot(sprintSound);
+            }
+            else
+            {
+                Debug.LogWarning("Sprint sound not assigned!");
+            }
         }
     }
 
@@ -93,5 +131,28 @@ public class PlayerMovement : MonoBehaviour
     public void StopBoost()
     {
         isBoosting = false;
+
+        // Stop the sprint sound when boost ends
+        audioSource.Stop();
+    }
+
+    // Method to play walking sound
+    private void PlayWalkingSound()
+    {
+        if (!audioSource.isPlaying && walkSound != null) // Play walking sound if not already playing
+        {
+            audioSource.clip = walkSound;
+            audioSource.loop = true;  // Loop the walking sound as long as the player is moving
+            audioSource.Play();
+        }
+    }
+
+    // Method to stop walking sound
+    private void StopWalkingSound()
+    {
+        if (audioSource.isPlaying && audioSource.clip == walkSound) // Stop if walking sound is playing
+        {
+            audioSource.Stop();
+        }
     }
 }
