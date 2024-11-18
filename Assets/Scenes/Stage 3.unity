@@ -175,7 +175,7 @@ GameObject:
   - component: {fileID: 59135505}
   m_Layer: 0
   m_Name: Player Robert
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2143,8 +2143,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointA: {fileID: 792800346}
   pointB: {fileID: 1899795594}
-  speed: 2
+  patrolSpeed: 2
+  chaseSpeed: 4
   waitTime: 2
+  detectionRange: 5
+  fieldOfViewAngle: 45
+  lostSightTime: 3
 --- !u!212 &1626759674
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2951,8 +2955,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pointA: {fileID: 1483031429}
   pointB: {fileID: 1711613720}
-  speed: 2
+  patrolSpeed: 2
+  chaseSpeed: 4
   waitTime: 2
+  detectionRange: 5
+  fieldOfViewAngle: 45
+  lostSightTime: 3
 --- !u!212 &1982274754
 SpriteRenderer:
   m_ObjectHideFlags: 0
