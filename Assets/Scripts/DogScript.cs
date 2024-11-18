@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MomChase : MonoBehaviour
+public class DogScript : MonoBehaviour
 {
     public GameObject player;
-    public GameObject dog;
     public float speed;
-    public Animator animator;
     public LineRenderer lineRenderer;
     public float lineLength = 4f;
 
     private float distance;
     private Vector2 movement;
-    private DogScript dogScript;
+
+    [HideInInspector] public bool seesPlayer = false;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2; //POINTS
-        dogScript = dog.GetComponent<DogScript>();
+
         Material lineMaterial = lineRenderer.material;
 
         Color color = lineMaterial.color;
@@ -41,22 +40,18 @@ public class MomChase : MonoBehaviour
         //LINE OF SIGHT RANGE
         if(distance < 4 && dotProduct > 0.90)
         {
+            seesPlayer = true;
            transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
            transform.up = direction;
+
            ChangeLineColor(Color.red, 1.0f);
         }
-        else if (dogScript.seesPlayer)
-        {
-           transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime * 2);
-           transform.up = direction;
-           ChangeLineColor(Color.red, 1.0f);
-        }
-        else
-        {
+        else{
+            seesPlayer = false;
             ChangeLineColor(Color.white, 1.0f);
         }
 
-        //MOVES MOM
+        //MOVES DOG
         Vector3 startPosition = transform.position;
         Vector3 endPosition = transform.position;
 
@@ -64,8 +59,8 @@ public class MomChase : MonoBehaviour
         lineRenderer.SetPosition(0, startPosition);
         Vector3 endPoint = transform.position + transform.up * lineLength;
         lineRenderer.SetPosition(1, endPoint);
-        
     }
+
     void ChangeLineColor(Color color, float alpha)
     {
         // Adjust the color's alpha value
