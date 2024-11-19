@@ -2216,6 +2216,7 @@ GameObject:
   - component: {fileID: 1456852085}
   - component: {fileID: 1456852082}
   - component: {fileID: 1456852087}
+  - component: {fileID: 1456852088}
   m_Layer: 0
   m_Name: Enemy (DogStationary)
   m_TagString: Untagged
@@ -2368,8 +2369,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 388510a250dfbe04abf537489f222a32, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: -1156112615, guid: 73b5f9e91bbc51542a3450a5d9ee76c7, type: 3}
+  m_Color: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
   m_FlipX: 1
   m_FlipY: 1
   m_DrawMode: 0
@@ -2411,6 +2412,27 @@ MonoBehaviour:
   lineRenderer: {fileID: 1456852082}
   lineLength: 4
   seesPlayer: 0
+--- !u!95 &1456852088
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1456852081}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1deb98932628baf47be106bf43eca6ae, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1611955115
 GameObject:
   m_ObjectHideFlags: 0
