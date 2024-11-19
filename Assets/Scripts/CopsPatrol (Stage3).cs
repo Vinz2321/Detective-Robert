@@ -120,34 +120,49 @@ public class CopsPatrol : MonoBehaviour
     }
 
     private void DrawFieldOfView()
+{
+    // Get the position from which to draw the FOV (including the offset)
+    Vector3 fovOrigin = transform.position + fovOffset;
+
+    // Check if the enemy is chasing the player
+    if (isChasing)
     {
-        // Get the position from which to draw the FOV (including the offset)
-        Vector3 fovOrigin = transform.position + fovOffset;
-
-        // Check the selected axis to draw the FOV cone
-        if (fovAxis == FovAxis.XAxis)
-        {
-            // Calculate the left and right boundary of the FOV cone (Horizontal)
-            Vector3 leftBoundary = Quaternion.Euler(0, 0, fieldOfViewAngle / 2) * transform.right * detectionRange;
-            Vector3 rightBoundary = Quaternion.Euler(0, 0, -fieldOfViewAngle / 2) * transform.right * detectionRange;
-
-            // Set the positions of the LineRenderer to create the FOV cone (Horizontal)
-            lineRenderer.SetPosition(0, fovOrigin);  // Starting point (with offset)
-            lineRenderer.SetPosition(1, fovOrigin + leftBoundary);  // Left boundary
-            lineRenderer.SetPosition(2, fovOrigin + rightBoundary);  // Right boundary
-        }
-        else if (fovAxis == FovAxis.YAxis)
-        {
-            // Calculate the up and down boundary of the FOV cone (Vertical)
-            Vector3 upBoundary = Quaternion.Euler(0, 0, fieldOfViewAngle / 2) * transform.up * detectionRange;
-            Vector3 downBoundary = Quaternion.Euler(0, 0, -fieldOfViewAngle / 2) * transform.up * detectionRange;
-
-            // Set the positions of the LineRenderer to create the FOV cone (Vertical)
-            lineRenderer.SetPosition(0, fovOrigin);  // Starting point (with offset)
-            lineRenderer.SetPosition(1, fovOrigin + upBoundary);  // Upward boundary
-            lineRenderer.SetPosition(2, fovOrigin + downBoundary);  // Downward boundary
-        }
+        // Change the FOV color to red when chasing the player
+        lineRenderer.startColor = Color.red;
+        lineRenderer.endColor = Color.red;
     }
+    else
+    {
+        // Change the FOV color back to yellow when not chasing
+        lineRenderer.startColor = Color.yellow;
+        lineRenderer.endColor = Color.yellow;
+    }
+
+    // Check the selected axis to draw the FOV cone
+    if (fovAxis == FovAxis.XAxis)
+    {
+        // Calculate the left and right boundary of the FOV cone (Horizontal)
+        Vector3 leftBoundary = Quaternion.Euler(0, 0, fieldOfViewAngle / 2) * transform.right * detectionRange;
+        Vector3 rightBoundary = Quaternion.Euler(0, 0, -fieldOfViewAngle / 2) * transform.right * detectionRange;
+
+        // Set the positions of the LineRenderer to create the FOV cone (Horizontal)
+        lineRenderer.SetPosition(0, fovOrigin);  // Starting point (with offset)
+        lineRenderer.SetPosition(1, fovOrigin + leftBoundary);  // Left boundary
+        lineRenderer.SetPosition(2, fovOrigin + rightBoundary);  // Right boundary
+    }
+    else if (fovAxis == FovAxis.YAxis)
+    {
+        // Calculate the up and down boundary of the FOV cone (Vertical)
+        Vector3 upBoundary = Quaternion.Euler(0, 0, fieldOfViewAngle / 2) * transform.up * detectionRange;
+        Vector3 downBoundary = Quaternion.Euler(0, 0, -fieldOfViewAngle / 2) * transform.up * detectionRange;
+
+        // Set the positions of the LineRenderer to create the FOV cone (Vertical)
+        lineRenderer.SetPosition(0, fovOrigin);  // Starting point (with offset)
+        lineRenderer.SetPosition(1, fovOrigin + upBoundary);  // Upward boundary
+        lineRenderer.SetPosition(2, fovOrigin + downBoundary);  // Downward boundary
+    }
+}
+
 
     private IEnumerator WaitAndSwitchDirection()
     {
