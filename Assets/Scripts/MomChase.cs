@@ -6,13 +6,14 @@ public class MomChase : MonoBehaviour
 {
     public GameObject player;
     public GameObject dog;
-    public float speed;
+    public float moveSpeed = 5f;
     public Animator animator;
     public LineRenderer lineRenderer;
     public float lineLength = 4f;
+    public Rigidbody2D rb;
 
     private float distance;
-    private Vector2 movement;
+    Vector2 movement;
     private DogScript dogScript;
     void Start()
     {
@@ -41,13 +42,13 @@ public class MomChase : MonoBehaviour
         //LINE OF SIGHT RANGE
         if(distance < 4 && dotProduct > 0.90)
         {
-           transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime);
+           transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, Time.deltaTime);
            transform.up = direction;
            ChangeLineColor(Color.red, 1.0f);
         }
         else if (dogScript.seesPlayer)
         {
-           transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, speed * Time.deltaTime * 2);
+           transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, Time.deltaTime * 2);
            transform.up = direction;
            ChangeLineColor(Color.red, 1.0f);
         }
@@ -64,8 +65,20 @@ public class MomChase : MonoBehaviour
         lineRenderer.SetPosition(0, startPosition);
         Vector3 endPoint = transform.position + transform.up * lineLength;
         lineRenderer.SetPosition(1, endPoint);
-        
+
+        movement.x = Input.GetAxisRaw("Horizontal");
+        movement.y = Input.GetAxisRaw("Vertical");
+
+        animator.SetFloat("Horizontal", movement.x);
+        animator.SetFloat("Vertical", movement.y);
+        animator.SetFloat("Speed", movement.sqrMagnitude);
     }
+
+     void FixedUpdate() 
+    {
+        rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
+    }
+
     void ChangeLineColor(Color color, float alpha)
     {
         // Adjust the color's alpha value
