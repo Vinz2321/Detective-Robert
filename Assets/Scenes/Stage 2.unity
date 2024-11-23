@@ -1034,10 +1034,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 59135498}
   dog: {fileID: 1456852081}
-  speed: 3.7
+  moveSpeed: 5
   animator: {fileID: 306459176}
   lineRenderer: {fileID: 306459180}
   lineLength: 4
+  rb: {fileID: 0}
 --- !u!120 &306459180
 LineRenderer:
   serializedVersion: 2
@@ -2600,15 +2601,43 @@ Tilemap:
   m_Enabled: 1
   m_Tiles: {}
   m_AnimatedTiles: {}
-  m_TileAssetArray: []
-  m_TileSpriteArray: []
-  m_TileMatrixArray: []
-  m_TileColorArray: []
+  m_TileAssetArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
+  m_TileMatrixArray:
+  - m_RefCount: 0
+    m_Data:
+      e00: 7.0684684e+28
+      e01: 0
+      e02: 5.0728617e+19
+      e03: 5.0728617e+19
+      e10: 2.7900757e+20
+      e11: 0
+      e12: 7.61e-43
+      e13: 7.61e-43
+      e20: 2.3251355e-26
+      e21: NaN
+      e22: -2.906781e-19
+      e23: 5.502301e-10
+      e30: 4.5904e-41
+      e31: 7.64e-43
+      e32: 7.61e-43
+      e33: 7.64e-43
+  m_TileColorArray:
+  - m_RefCount: 0
+    m_Data: {r: 3.9505e-41, g: 3.9505e-41, b: 3.9505e-41, a: 3.9505e-41}
+  - m_RefCount: 0
+    m_Data: {r: NaN, g: NaN, b: NaN, a: NaN}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Origin: {x: 0, y: 0, z: 0}
-  m_Size: {x: 0, y: 0, z: 1}
+  m_Origin: {x: -12, y: 0, z: 0}
+  m_Size: {x: 12, y: 3, z: 1}
   m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
