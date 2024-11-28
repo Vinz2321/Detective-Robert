@@ -2730,6 +2730,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   safeColor: {r: 0, g: 1, b: 0, a: 1}
   alertColor: {r: 1, g: 0, b: 0, a: 1}
+  alertSound: {fileID: 8300000, guid: 072e238e31c79c54e8bbe69ac7e6e637, type: 3}
 --- !u!58 &1505546448
 CircleCollider2D:
   m_ObjectHideFlags: 0

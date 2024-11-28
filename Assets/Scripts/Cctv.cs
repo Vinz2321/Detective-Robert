@@ -8,6 +8,9 @@ public class Cctv : MonoBehaviour
     public Color alertColor = Color.red;
 
     private SpriteRenderer spriteRenderer;
+    private AudioSource audioSource;
+
+    public AudioClip alertSound; // Sound to play when alertColor is set
 
     void Start()
     {
@@ -16,6 +19,13 @@ public class Cctv : MonoBehaviour
         if (spriteRenderer == null)
         {
             Debug.LogError("SpriteRenderer not found on the CCTV object!");
+        }
+
+        // Get or add an AudioSource component
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
         }
 
         // Set the initial color to safe
@@ -28,6 +38,7 @@ public class Cctv : MonoBehaviour
         if (other.CompareTag("Player")) // Check if the object is the Player
         {
             spriteRenderer.color = alertColor;
+            PlayAlertSound();
             Debug.Log("Player entered CCTV detection!");
         }
     }
@@ -38,6 +49,18 @@ public class Cctv : MonoBehaviour
         {
             spriteRenderer.color = safeColor;
             Debug.Log("Player left CCTV detection!");
+        }
+    }
+
+    private void PlayAlertSound()
+    {
+        if (alertSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(alertSound);
+        }
+        else
+        {
+            Debug.LogWarning("Alert sound or AudioSource is missing!");
         }
     }
 }
