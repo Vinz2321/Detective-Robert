@@ -28,6 +28,6 @@ public class SceneChanger : MonoBehaviour
         }
 
         // Load the scene
-        SceneManager.LoadScene(SceneName);
+        //SceneManager.LoadScene(SceneName);
     }
 }
