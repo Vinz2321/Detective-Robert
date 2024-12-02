@@ -42,13 +42,13 @@ public class MomChase : MonoBehaviour
         //LINE OF SIGHT RANGE
         if(distance < 4 && dotProduct > 0.90)
         {
-           transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, Time.deltaTime);
+           transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, moveSpeed * Time.deltaTime);
            transform.up = direction;
            ChangeLineColor(Color.red, 1.0f);
         }
         else if (dogScript.seesPlayer)
         {
-           transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, Time.deltaTime * 2);
+           transform.position = Vector2.MoveTowards(this.transform.position, player.transform.position, moveSpeed * Time.deltaTime * 2);
            transform.up = direction;
            ChangeLineColor(Color.red, 1.0f);
         }
