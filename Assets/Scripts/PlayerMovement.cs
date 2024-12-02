@@ -155,4 +155,9 @@ public class PlayerMovement : MonoBehaviour
             audioSource.Stop();
         }
     }
+    public bool IsBoosting()
+    {
+        return isBoosting;
+    }
+
 }
