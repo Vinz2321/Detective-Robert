@@ -997,7 +997,7 @@ SpriteRenderer:
   m_SortingOrder: 5
   m_Sprite: {fileID: 1486863518, guid: f762bff1e83676e4eb882e004faf857a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 1
   m_DrawMode: 0
   m_Size: {x: 5.75, y: 5.75}
@@ -1015,7 +1015,7 @@ Transform:
   m_GameObject: {fileID: 306459175}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 1, w: 0.000000059604645}
-  m_LocalPosition: {x: -8.87, y: 2.41, z: 0}
+  m_LocalPosition: {x: -8.55, y: 1.56, z: 0}
   m_LocalScale: {x: 0.30935615, y: 0.30935615, z: 0.30935615}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1035,11 +1035,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 59135498}
   dog: {fileID: 1456852081}
-  moveSpeed: 5
+  moveSpeed: 4
   animator: {fileID: 306459176}
   lineRenderer: {fileID: 306459180}
   lineLength: 4
   rb: {fileID: 0}
+  patrolPoints:
+  - {x: 0, y: 5}
+  - {x: 0, y: -5}
+  - {x: 5, y: -5}
+  - {x: 5, y: 5}
 --- !u!120 &306459180
 LineRenderer:
   serializedVersion: 2
@@ -1079,9 +1084,9 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -2072258207
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
@@ -2365,9 +2370,9 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -2072258207
+  m_SortingLayer: 2
+  m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
