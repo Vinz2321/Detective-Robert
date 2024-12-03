@@ -3098,6 +3098,7 @@ MonoBehaviour:
   fieldOfViewAngle: 45
   lostSightTime: 3
   fovOffset: {x: 0, y: 0, z: 0}
+  animator: {fileID: 1626759677}
 --- !u!212 &1626759674
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -4187,6 +4188,7 @@ MonoBehaviour:
   fieldOfViewAngle: 45
   lostSightTime: 3
   fovOffset: {x: 0, y: 0, z: 0}
+  animator: {fileID: 1982274757}
 --- !u!212 &1982274754
 SpriteRenderer:
   m_ObjectHideFlags: 0

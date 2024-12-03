@@ -28,13 +28,21 @@ public class CopsPatrol : MonoBehaviour
 
     private LineRenderer lineRenderer;  // Reference to LineRenderer for FOV visualization
 
+    public Animator animator; // ADDED BY VIN // ADDED BY VIN // ADDED BY VIN
+
     void Start()
     {
+        transform.rotation = Quaternion.identity; // ADDED BY VIN // ADDED BY VIN // ADDED BY VIN
         // Find the player in the scene (assumes the player has the "Player" tag)
         player = GameObject.FindGameObjectWithTag("Player").transform;
 
         // Get the LineRenderer component
         lineRenderer = GetComponent<LineRenderer>();
+
+        if (animator == null)
+    {
+        animator = GetComponent<Animator>();
+    }
         if (lineRenderer != null)
         {
             lineRenderer.positionCount = 3;  // FOV is a cone, so we need three points (start, left, and right)
@@ -48,7 +56,7 @@ public class CopsPatrol : MonoBehaviour
     }
 
     void Update()
-    {
+    { 
         if (player != null)
         {
             if (IsPlayerInFieldOfView())
@@ -73,6 +81,8 @@ public class CopsPatrol : MonoBehaviour
 
         if (isChasing)
         {
+            animator.SetBool("IsChasing", true); // ADDED BY VIN // ADDED BY VIN // ADDED BY VIN
+            animator.SetFloat("Speed", chaseSpeed); // ADDED BY VIN // ADDED BY VIN // ADDED BY VIN
             // Rotate sprite to face the player
             Vector2 directionToPlayer = player.position - transform.position;
             float angle = Mathf.Atan2(directionToPlayer.y, directionToPlayer.x) * Mathf.Rad2Deg;
@@ -83,6 +93,8 @@ public class CopsPatrol : MonoBehaviour
         }
         else if (!isWaiting)
         {
+            animator.SetBool("IsChasing", false); // ADDED BY VIN // ADDED BY VIN // ADDED BY VIN
+            animator.SetFloat("Speed", 0); // ADDED BY VIN // ADDED BY VIN // ADDED BY VIN
             // Patrol behavior when not chasing
             if (movingToB)
             {
@@ -90,6 +102,7 @@ public class CopsPatrol : MonoBehaviour
                 Vector2 directionToB = pointB.position - transform.position;
                 float angleToB = Mathf.Atan2(directionToB.y, directionToB.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(new Vector3(0, 0, angleToB));
+                animator.SetFloat("Speed", 0); // ADDED BY VIN // ADDED BY VIN // ADDED BY VIN
 
                 transform.position = Vector2.MoveTowards(transform.position, pointB.position, patrolSpeed * Time.deltaTime);
                 if (Vector2.Distance(transform.position, pointB.position) < 0.1f)
@@ -103,6 +116,7 @@ public class CopsPatrol : MonoBehaviour
                 Vector2 directionToA = pointA.position - transform.position;
                 float angleToA = Mathf.Atan2(directionToA.y, directionToA.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(new Vector3(0, 0, angleToA));
+                animator.SetFloat("Speed", 0); // ADDED BY VIN // ADDED BY VIN // ADDED BY VIN
 
                 transform.position = Vector2.MoveTowards(transform.position, pointA.position, patrolSpeed * Time.deltaTime);
                 if (Vector2.Distance(transform.position, pointA.position) < 0.1f)
