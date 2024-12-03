@@ -43,14 +43,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Floor
-    uniqueID: 1826606205
-    locked: 0
   - name: Walls
     uniqueID: 2222709089
     locked: 0
+  - name: Floor
+    uniqueID: 1826606205
+    locked: 0
   - name: Interactable Objects
     uniqueID: 1745327491
+    locked: 0
+  - name: Furnitures
+    uniqueID: 2280986619
+    locked: 0
+  - name: Door
+    uniqueID: 2750241335
     locked: 0
   - name: Player
     uniqueID: 1983946045
