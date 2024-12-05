@@ -1,41 +1,50 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Stage4_NPCTrigger : MonoBehaviour
 {
-    public GameObject guard;  // Reference to the guard GameObject
-    private Stage4_Guard2 guardScript;
+    public string message = "Hello, sir!"; // The text to display
+    public GameObject textUI; // Reference to the UI Text GameObject
+    public Stage4_Guard2 guard; // Reference to the guard script
 
-    void Start()
+    private bool playerTriggered = false; // Tracks if the player triggered the NPC
+
+    private void Start()
     {
-        // Get the guard's script component
-        if (guard != null)
+        if (textUI != null)
         {
-            guardScript = guard.GetComponent<Stage4_Guard2>();
+            textUI.SetActive(false); // Ensure the text UI is hidden at the start
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) // When player enters the NPC's trigger zone
+        if (other.CompareTag("Player") && textUI != null)
         {
-            Debug.Log("Player entered the trigger zone");
-            if (guardScript != null)
+            textUI.SetActive(true); // Display the text UI
+            textUI.GetComponent<Text>().text = message; // Set the message
+            playerTriggered = true; // Mark the player as having triggered the NPC
+
+            // Inform the guard that the player triggered this NPC
+            if (guard != null)
             {
-                guardScript.ActivateChasing(true); // Activate chasing
+                guard.SetPlayerTriggered(true); // Start the chase
             }
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) // When player leaves the NPC's trigger zone
+        if (other.CompareTag("Player") && textUI != null)
         {
-            Debug.Log("Player exited the trigger zone");
-            if (guardScript != null)
+            textUI.SetActive(false); // Hide the text UI when the player exits
+            playerTriggered = false; // Reset the trigger flag
+
+            // Inform the guard that the player is no longer in range
+            if (guard != null)
             {
-                guardScript.ActivateChasing(false); // Deactivate chasing
+                guard.SetPlayerTriggered(false); // Stop chasing if needed
             }
         }
     }
-
 }

@@ -1,86 +1,135 @@
+using System.Collections;
 using UnityEngine;
 
 public class Stage4_Guard2 : MonoBehaviour
 {
     public GameObject player;                // Reference to the player GameObject
-    public float detectionAngle = 60f;       // Field of view angle for detecting the player
-    public float detectionRange = 6f;        // Front detection range
-    public float speed = 3f;                 // Speed at which the guard chases the player
-    private Vector3 originalPosition;        // Original position of the guard
-    private bool isChasing = false;          // Tracks if the guard is chasing the player
+    public GameObject guardSprite;           // 2D sprite to display next to the guard
+    public float detectionRadius = 5f;       // Radius for detecting the player
+    public float chaseSpeed = 4f;            // Speed of the guard when chasing the player
+    public float sprintSpeed = 6f;           // Sprint speed of the guard when chasing while player boosts
+    public float returnSpeed = 3f;           // Speed of the guard when returning to its position
 
-    private LineRenderer lineRenderer;       // LineRenderer to draw the front detection area
-    public int segments = 50;                // Number of segments for the detection arc
+    private bool isChasing = false;          // Whether the guard is currently chasing the player
+    private bool playerTriggered = false;    // Tracks if the player triggered the guard
+    private Vector3 originalPosition;        // The guard's initial position
+    private PlayerMovement playerMovement;   // Reference to the PlayerMovement script
+
+    private LineRenderer lineRenderer;       // LineRenderer to draw the detection radius
+    public int segments = 50;                // Number of segments for the circle
 
     void Start()
     {
         // Save the guard's original position
         originalPosition = transform.position;
 
+        // Get the PlayerMovement script from the player GameObject
+        if (player != null)
+        {
+            playerMovement = player.GetComponent<PlayerMovement>();
+        }
+
         // Initialize LineRenderer
         lineRenderer = gameObject.AddComponent<LineRenderer>();
-        lineRenderer.startWidth = 0.05f;        // Thickness of the line
+        lineRenderer.startWidth = 0.05f;       // Thickness of the circle
         lineRenderer.endWidth = 0.05f;
-        lineRenderer.useWorldSpace = true;     // Use world space for the detection arc
-        lineRenderer.loop = false;             // Do not close the arc
-        lineRenderer.positionCount = segments + 1; // Number of points for the arc
+        lineRenderer.useWorldSpace = true;     // Use world space to draw around guard
+        lineRenderer.loop = true;              // Close the circle
+        lineRenderer.positionCount = segments + 1; // Number of points for the circle
         lineRenderer.material = new Material(Shader.Find("Sprites/Default")); // Basic material
-        lineRenderer.startColor = Color.yellow;
-        lineRenderer.endColor = Color.yellow;
+        lineRenderer.startColor = Color.red;
+        lineRenderer.endColor = Color.red;
 
-        DrawDetectionArc();
+        DrawCircle();
+
+        // Always make the guard sprite visible
+        if (guardSprite != null)
+        {
+            guardSprite.SetActive(true);
+        }
     }
 
     void Update()
     {
-        if (player == null)
+        if (player == null || playerMovement == null)
             return;
 
-        // Only start chasing if the player is in detection range and if the guard is activated to chase
-        if (isChasing)
+        // Only chase if the player has triggered the NPC
+        if (playerTriggered)
         {
-            // Check if the player is within the front detection area
-            Vector3 directionToPlayer = (player.transform.position - transform.position).normalized;
-            float distanceToPlayer = Vector3.Distance(transform.position, player.transform.position);
-            float angleToPlayer = Vector3.Angle(transform.forward, directionToPlayer);
+            // Check the distance between the guard and the player
+            float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
-            Debug.Log($"Distance: {distanceToPlayer}, Angle: {angleToPlayer}");
-
-            if (distanceToPlayer <= detectionRange && angleToPlayer <= detectionAngle / 2)
+            // Check if player is within the detection range and boosting
+            if (distanceToPlayer <= detectionRadius && playerMovement.IsBoosting())
             {
-                // Chase the player
-                Debug.Log("Chasing player");
-                transform.position = Vector3.MoveTowards(transform.position, player.transform.position, speed * Time.deltaTime);
+                // Only start chasing if not already chasing
+                if (!isChasing)
+                {
+                    isChasing = true;
+                    Debug.Log("Guard started chasing because the player is boosting.");
+                }
+                ChasePlayer(true); // Chase at sprint speed
             }
-            else
+            else if (isChasing && distanceToPlayer > detectionRadius)
             {
-                // Return to the original position if not chasing the player
-                Debug.Log("Returning to original position");
-                transform.position = Vector3.MoveTowards(transform.position, originalPosition, speed * Time.deltaTime);
+                // Stop chasing if the player is out of range
+                Debug.Log("Guard stopped chasing because the player left the detection radius.");
+                StartCoroutine(ReturnToPosition());
+            }
+            else if (!playerMovement.IsBoosting())
+            {
+                // Continue chasing at normal speed when not boosting
+                if (isChasing)
+                {
+                    Debug.Log("Guard continues chasing at normal speed.");
+                    ChasePlayer(false); // Chase at normal speed
+                }
             }
         }
     }
 
-
-    // Method to activate or deactivate chasing
-    public void ActivateChasing(bool chase)
+    // This method is called from the Stage4_NPCTrigger to set the trigger state
+    public void SetPlayerTriggered(bool triggered)
     {
-        isChasing = chase;
+        playerTriggered = triggered;
     }
 
-    // Draw the front detection arc using LineRenderer
-    void DrawDetectionArc()
+    void ChasePlayer(bool sprinting)
     {
-        float angle = -detectionAngle / 2; // Start angle for the arc
-        float angleStep = detectionAngle / segments;
+        // Move towards the player's position
+        if (player != null)
+        {
+            float currentSpeed = sprinting ? sprintSpeed : chaseSpeed;
+            transform.position = Vector3.MoveTowards(transform.position, player.transform.position, currentSpeed * Time.deltaTime);
+        }
+    }
 
+    IEnumerator ReturnToPosition()
+    {
+        isChasing = false;
+
+        // Gradually move back to the original position
+        while (Vector3.Distance(transform.position, originalPosition) > 0.1f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, originalPosition, returnSpeed * Time.deltaTime);
+            yield return null;
+        }
+
+        transform.position = originalPosition; // Snap to the original position
+    }
+
+    // Draw a circular detection radius using LineRenderer
+    void DrawCircle()
+    {
+        float angle = 0f;
         for (int i = 0; i <= segments; i++)
         {
-            float x = Mathf.Sin(angle * Mathf.Deg2Rad) * detectionRange;
-            float y = Mathf.Cos(angle * Mathf.Deg2Rad) * detectionRange;
+            float x = Mathf.Cos(angle) * detectionRadius + transform.position.x;
+            float y = Mathf.Sin(angle) * detectionRadius + transform.position.y;
 
-            lineRenderer.SetPosition(i, new Vector3(x, y, 0) + transform.position);
-            angle += angleStep;
+            lineRenderer.SetPosition(i, new Vector3(x, y, 0));
+            angle += 2 * Mathf.PI / segments;
         }
     }
 }
