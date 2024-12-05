@@ -206,6 +206,7 @@ MonoBehaviour:
   staminaRegenRate: 25
   sprintSound: {fileID: 8300000, guid: 55b93fad6bf78b449a417349cdda1aa5, type: 3}
   walkSound: {fileID: 8300000, guid: fe430a65e3d6abf4781d3d67d3c3646b, type: 3}
+  breathingSound: {fileID: 0}
 --- !u!50 &59135500
 Rigidbody2D:
   serializedVersion: 4
@@ -1581,7 +1582,7 @@ GameObject:
   - component: {fileID: 787989166}
   - component: {fileID: 787989165}
   m_Layer: 0
-  m_Name: Square
+  m_Name: Violet key
   m_TagString: Evidence
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1624,7 +1625,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 2.25, y: 2.25}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 2.25, y: 2.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -1674,11 +1675,11 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 388510a250dfbe04abf537489f222a32, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.94743156, g: 0, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.25, y: 2.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1829,6 +1830,7 @@ MonoBehaviour:
   fieldOfViewAngle: 45
   lostSightTime: 3
   fovOffset: {x: 0, y: 0, z: 0}
+  animator: {fileID: 0}
 --- !u!120 &977400621
 LineRenderer:
   serializedVersion: 2
