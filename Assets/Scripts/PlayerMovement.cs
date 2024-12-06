@@ -193,4 +193,15 @@ public class PlayerMovement : MonoBehaviour
         return isBoosting;
     }
 
+    public void SetMovementEnabled(bool isEnabled)
+    {
+        this.enabled = isEnabled; // Toggles the script on or off
+        if (!isEnabled)
+        {
+            // Stop the walking sound when movement is disabled
+            StopWalkingSound();
+            movement = Vector2.zero; // Ensure the player stops moving
+        }
+    }
+
 }
