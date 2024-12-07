@@ -29,4 +29,15 @@ public class SqueakyTile : MonoBehaviour
             }
         }
     }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+         if (other.CompareTag("Player"))
+        {
+            if (audioSource != null && soundClip != null)
+            {
+                audioSource.Stop();
+            }
+        }
+    }
 }

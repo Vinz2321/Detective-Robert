@@ -49,6 +49,9 @@ TagManager:
   - name: Floor
     uniqueID: 1826606205
     locked: 0
+  - name: Background
+    uniqueID: 91125909
+    locked: 0
   - name: Interactable Objects
     uniqueID: 1745327491
     locked: 0
