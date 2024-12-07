@@ -24,10 +24,10 @@ public class PlayerMovement : MonoBehaviour
 
     // AudioSource variables
     public AudioSource sprintAudioSource; // AudioSource for sprint sound
+    public AudioSource breathingAudioSource; // AudioSource for heavy breathing sound
     public AudioClip walkingSound; // Walking sound clip
     public AudioClip breathingSound; // Breathing sound clip
     private AudioSource audioSource;
-    private AudioSource breathingAudioSource;
 
     void Start()
     {
@@ -41,13 +41,17 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Initialize the audio sources
-        breathingAudioSource = gameObject.AddComponent<AudioSource>();
-        breathingAudioSource.volume = 0.1f;
         audioSource = gameObject.AddComponent<AudioSource>();
 
         if (sprintAudioSource != null)
         {
             sprintAudioSource.loop = false; // Sprint sound should not loop
+        }
+
+        if (breathingAudioSource != null)
+        {
+            breathingAudioSource.loop = true;  // Heavy breathing sound should loop
+            breathingAudioSource.volume = 0.1f; // Optional: adjust volume if needed
         }
     }
 
@@ -96,6 +100,7 @@ public class PlayerMovement : MonoBehaviour
             staminaSlider.value = currentStamina;
         }
 
+        // Manage breathing sound based on stamina
         if (currentStamina <= 0 && !breathingAudioSource.isPlaying)
         {
             PlayBreathingSound();
@@ -160,19 +165,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayBreathingSound()
     {
-        if (breathingSound != null && !breathingAudioSource.isPlaying)
+        if (breathingSound != null && breathingAudioSource != null && !breathingAudioSource.isPlaying)
         {
             breathingAudioSource.clip = breathingSound;
-            breathingAudioSource.loop = true;  // Loop breathing sound
-            breathingAudioSource.Play();
+            breathingAudioSource.Play();  // Play breathing sound when stamina is low
         }
     }
 
     private void StopBreathingSound()
     {
-        if (breathingAudioSource.isPlaying)
+        if (breathingAudioSource != null && breathingAudioSource.isPlaying)
         {
-            breathingAudioSource.Stop(); // Stop breathing sound
+            breathingAudioSource.Stop(); // Stop breathing sound when stamina regenerates
         }
     }
 
