@@ -22,12 +22,11 @@ public class PlayerMovement : MonoBehaviour
 
     private Vector2 movement;
 
-    // Audio variables
-    public AudioClip sprintSound; // Sprint sound clip
-    public AudioClip walkSound;  // Walking sound clip
-    public AudioClip breathingSound;
+    // AudioSource variables
+    public AudioSource sprintAudioSource; // AudioSource for sprint sound
+    public AudioClip walkingSound; // Walking sound clip
+    public AudioClip breathingSound; // Breathing sound clip
     private AudioSource audioSource;
-
     private AudioSource breathingAudioSource;
 
     void Start()
@@ -41,10 +40,15 @@ public class PlayerMovement : MonoBehaviour
             staminaSlider.value = currentStamina; // Set slider value to match current stamina
         }
 
-        // Initialize the audio source
+        // Initialize the audio sources
         breathingAudioSource = gameObject.AddComponent<AudioSource>();
         breathingAudioSource.volume = 0.1f;
         audioSource = gameObject.AddComponent<AudioSource>();
+
+        if (sprintAudioSource != null)
+        {
+            sprintAudioSource.loop = false; // Sprint sound should not loop
+        }
     }
 
     void Update()
@@ -58,6 +62,17 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("Horizontal", movement.x);
             animator.SetFloat("Vertical", movement.y);
             animator.SetFloat("Speed", movement.sqrMagnitude);
+
+            // Play walking sound if the player is walking but not boosting
+            if (!isBoosting && movement.sqrMagnitude > 0.1f && !audioSource.isPlaying && walkingSound != null)
+            {
+                audioSource.PlayOneShot(walkingSound); // Play walking sound
+            }
+            // Stop walking sound if player stops moving or starts boosting
+            else if (movement.sqrMagnitude == 0 || isBoosting)
+            {
+                audioSource.Stop(); // Stop walking sound
+            }
         }
 
         // Drain stamina if boosting
@@ -66,7 +81,6 @@ public class PlayerMovement : MonoBehaviour
             currentStamina -= staminaDrainRate * Time.deltaTime;
             if (currentStamina <= 0)
             {
-                PlayWalkingSound();
                 currentStamina = 0;
                 StopBoost(); // Stop boost if stamina is depleted
             }
@@ -81,37 +95,25 @@ public class PlayerMovement : MonoBehaviour
         {
             staminaSlider.value = currentStamina;
         }
+
         if (currentStamina <= 0 && !breathingAudioSource.isPlaying)
         {
-        PlayBreathingSound();
+            PlayBreathingSound();
         }
         else if (currentStamina > 75f && breathingAudioSource.isPlaying)
         {
-        StopBreathingSound();
+            StopBreathingSound();
         }
-        if (breathingSound == null)
-        {
-        Debug.LogWarning("Breathing sound not assigned!");
-        }
+
         // Listen for input to start or stop boosting
-        if (Input.GetButtonDown("Sprint")) // Replace with your actual input button for sprint
+        if (Input.GetButtonDown("Sprint"))
         {
             StartBoost();
         }
 
-        if (Input.GetButtonUp("Sprint")) // Replace with your actual input button for sprint
+        if (Input.GetButtonUp("Sprint"))
         {
             StopBoost();
-        }
-
-        // Play walking sound if moving
-        if (movement.sqrMagnitude > 0.1f && !isBoosting) // Only play walking sound if moving and not boosting
-        {
-            PlayWalkingSound();
-        }
-        else if (movement.sqrMagnitude == 0 && !isBoosting) // Stop walking sound if idle
-        {
-            StopWalkingSound();
         }
     }
 
@@ -125,69 +127,55 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // Method to start boost (call this from the UI button)
+    // Method to start boost (play sprint sound)
     public void StartBoost()
     {
-        if (currentStamina > 0) // Start boost only if there is stamina left
+        if (currentStamina > 0)
         {
             isBoosting = true;
 
-            // Play the sprint sound if it's set
-            if (sprintSound != null && !audioSource.isPlaying) // Prevent sound from playing again if it's already playing
+            // Play the sprint sound if it's set and not already playing
+            if (sprintAudioSource != null && !sprintAudioSource.isPlaying)
             {
-                audioSource.PlayOneShot(sprintSound);
+                sprintAudioSource.Play(); // Play sprint sound
             }
             else
             {
-                Debug.LogWarning("Sprint sound not assigned!");
+                Debug.LogWarning("Sprint AudioSource not assigned or already playing!");
             }
         }
     }
 
-    // Method to stop boost (call this from the UI button)
+    // Method to stop boost (stop sprint sound)
     public void StopBoost()
     {
         isBoosting = false;
 
         // Stop the sprint sound when boost ends
-        audioSource.Stop();
+        if (sprintAudioSource != null && sprintAudioSource.isPlaying)
+        {
+            sprintAudioSource.Stop(); // Stop sprint sound
+        }
     }
 
     private void PlayBreathingSound()
     {
-    if (breathingSound != null && !breathingAudioSource.isPlaying)
-    {
-        breathingAudioSource.clip = breathingSound;
-        breathingAudioSource.loop = true;  // Loop breathing sound
-        breathingAudioSource.Play();
-    }
-    }
-    private void StopBreathingSound()
-    {
-    if (breathingAudioSource.isPlaying)
-    {
-        breathingAudioSource.Stop();
-    }
-    }
-    // Method to play walking sound
-    private void PlayWalkingSound()
-    {
-        if (!audioSource.isPlaying && walkSound != null) // Play walking sound if not already playing
+        if (breathingSound != null && !breathingAudioSource.isPlaying)
         {
-            audioSource.clip = walkSound;
-            audioSource.loop = true;  // Loop the walking sound as long as the player is moving
-            audioSource.Play();
+            breathingAudioSource.clip = breathingSound;
+            breathingAudioSource.loop = true;  // Loop breathing sound
+            breathingAudioSource.Play();
         }
     }
 
-    // Method to stop walking sound
-    private void StopWalkingSound()
+    private void StopBreathingSound()
     {
-        if (audioSource.isPlaying && audioSource.clip == walkSound) // Stop if walking sound is playing
+        if (breathingAudioSource.isPlaying)
         {
-            audioSource.Stop();
+            breathingAudioSource.Stop(); // Stop breathing sound
         }
     }
+
     public bool IsBoosting()
     {
         return isBoosting;
@@ -199,9 +187,8 @@ public class PlayerMovement : MonoBehaviour
         if (!isEnabled)
         {
             // Stop the walking sound when movement is disabled
-            StopWalkingSound();
+            audioSource.Stop();
             movement = Vector2.zero; // Ensure the player stops moving
         }
     }
-
 }
