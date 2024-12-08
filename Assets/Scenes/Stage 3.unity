@@ -243,7 +243,6 @@ GameObject:
   - component: {fileID: 59135501}
   - component: {fileID: 59135499}
   - component: {fileID: 59135505}
-  - component: {fileID: 59135506}
   m_Layer: 0
   m_Name: Player Robert
   m_TagString: Player
@@ -272,8 +271,8 @@ MonoBehaviour:
   maxStamina: 150
   staminaDrainRate: 50
   staminaRegenRate: 25
-  sprintAudioSource: {fileID: 59135506}
-  walkingSound: {fileID: 8300000, guid: 834d020d0111b06409e6eb4396d79286, type: 3}
+  sprintSound: {fileID: 8300000, guid: 55b93fad6bf78b449a417349cdda1aa5, type: 3}
+  walkSound: {fileID: 8300000, guid: fe430a65e3d6abf4781d3d67d3c3646b, type: 3}
   breathingSound: {fileID: 8300000, guid: 374563c2b71a4594ead386ddfa4baf0d, type: 3}
 --- !u!50 &59135500
 Rigidbody2D:
@@ -451,6 +450,7 @@ MonoBehaviour:
   collectionSound: {fileID: 8300000, guid: 8f51d00d197faad41b91d2cd18ce4b7a, type: 3}
   keyCollectionSound: {fileID: 8300000, guid: 7d7fd5333cc476442ac62cb85533f7de, type: 3}
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 --- !u!82 &59135506
 AudioSource:
@@ -548,6 +548,8 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+=======
+>>>>>>> parent of 3fa7ba94 (stage 3)
 --- !u!1 &82879343
 GameObject:
   m_ObjectHideFlags: 0
