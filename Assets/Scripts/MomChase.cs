@@ -11,6 +11,7 @@ public class MomChase : MonoBehaviour
     public LineRenderer lineRenderer;
     public float lineLength = 4f;
     public Rigidbody2D rb;
+    public PlayerHealth playerHealth; // Reference to the PlayerHealth script
 
     private float distance;
     private Vector2 movement;
@@ -24,10 +25,10 @@ public class MomChase : MonoBehaviour
 
     private bool isReturningToStart = false;
     private Vector2 startingPosition;
-    private int currentPatrolIndex = 0; 
-    private float patrolWaitTime = 2f; 
-    private float patrolTimer = 0f;    
-    private bool isChasingPlayer = false; 
+    private int currentPatrolIndex = 0;
+    private float patrolWaitTime = 2f;
+    private float patrolTimer = 0f;
+    private bool isChasingPlayer = false;
 
     void Start()
     {
@@ -41,16 +42,20 @@ public class MomChase : MonoBehaviour
         lineMaterial.color = color;
         ChangeLineColor(Color.white, 0.1f);
 
-    // Save Pos
-    startingPosition = transform.position;
+        // Save Pos
+        startingPosition = transform.position;
 
-    // Set patrol points
-    patrolPoints = new Vector2[]
-    {
-        new Vector2(startingPosition.x, startingPosition.y + 5),  // Up from start
-        new Vector2(startingPosition.x, startingPosition.y - 5)  // Down from start
-    };
+        // Set patrol points
+        patrolPoints = new Vector2[]
+        {
+            new Vector2(startingPosition.x, startingPosition.y + 5),  // Up from start
+            new Vector2(startingPosition.x, startingPosition.y - 5)  // Down from start
+        };
 
+        if (player != null)
+        {
+            playerHealth = player.GetComponent<PlayerHealth>();
+        }
     }
 
     void Update()
@@ -83,33 +88,33 @@ public class MomChase : MonoBehaviour
             ChangeLineColor(Color.white, 1.0f);
 
             if (isChasingPlayer)
-        {
-            isChasingPlayer = false;
-            isReturningToStart = true;
-        }
-                if (isReturningToStart)
-        {
-            transform.position = Vector2.MoveTowards(transform.position, startingPosition, moveSpeed * Time.deltaTime);
-
-            if ((Vector2)transform.position == startingPosition)
             {
-                isReturningToStart = false; // Stop 
-                currentPatrolIndex = 0;     // Restart 
+                isChasingPlayer = false;
+                isReturningToStart = true;
             }
+            if (isReturningToStart)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, startingPosition, moveSpeed * Time.deltaTime);
 
-            animator.SetFloat("Speed", moveSpeed); // walking  
+                if ((Vector2)transform.position == startingPosition)
+                {
+                    isReturningToStart = false; // Stop 
+                    currentPatrolIndex = 0;     // Restart 
+                }
+
+                animator.SetFloat("Speed", moveSpeed); // walking  
+            }
+            else
+            {
+                animator.SetFloat("Speed", 0); // Idle 
+            }
         }
-        else
+
+        // Patrolling
+        if (!isChasingPlayer && !isReturningToStart)
         {
-            animator.SetFloat("Speed", 0); // Idle 
+            Patrol();
         }
-    }
-
-    // Patrolling
-    if (!isChasingPlayer && !isReturningToStart)
-    {
-        Patrol();
-    }
 
         // Line of sight
         Vector3 startPosition = transform.position;
@@ -120,6 +125,12 @@ public class MomChase : MonoBehaviour
 
         animator.SetFloat("Horizontal", directionNormalized.x);
         animator.SetFloat("Vertical", directionNormalized.y);
+
+        // Check if MomChase catches the player
+        if (isChasingPlayer && distance < 0.5f)
+        {
+            CatchPlayer();
+        }
     }
 
     void FixedUpdate()
@@ -127,37 +138,46 @@ public class MomChase : MonoBehaviour
         rb.MovePosition(rb.position + movement * moveSpeed * Time.fixedDeltaTime);
     }
 
-void Patrol()
-{
-    animator.SetFloat("Speed", moveSpeed);
-    Vector2 targetPatrolPoint = patrolPoints[currentPatrolIndex];
-    Vector2 currentPosition = transform.position;
-
-    Vector2 direction = (targetPatrolPoint - currentPosition).normalized;
-
-    if (direction != Vector2.zero)
+    void Patrol()
     {
-        transform.up = direction; 
-    }
+        animator.SetFloat("Speed", moveSpeed);
+        Vector2 targetPatrolPoint = patrolPoints[currentPatrolIndex];
+        Vector2 currentPosition = transform.position;
 
-    transform.position = Vector2.MoveTowards(currentPosition, targetPatrolPoint, moveSpeed * Time.deltaTime);
+        Vector2 direction = (targetPatrolPoint - currentPosition).normalized;
 
-    if ((Vector2)transform.position == targetPatrolPoint)
-    {
-        animator.SetFloat("Speed", 0);
-        patrolTimer += Time.deltaTime;
-        if (patrolTimer >= patrolWaitTime)
+        if (direction != Vector2.zero)
         {
-            patrolTimer = 0f;
-            currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+            transform.up = direction;
+        }
+
+        transform.position = Vector2.MoveTowards(currentPosition, targetPatrolPoint, moveSpeed * Time.deltaTime);
+
+        if ((Vector2)transform.position == targetPatrolPoint)
+        {
+            animator.SetFloat("Speed", 0);
+            patrolTimer += Time.deltaTime;
+            if (patrolTimer >= patrolWaitTime)
+            {
+                patrolTimer = 0f;
+                currentPatrolIndex = (currentPatrolIndex + 1) % patrolPoints.Length;
+            }
         }
     }
-}
 
     void ChangeLineColor(Color color, float alpha)
     {
         color.a = alpha;
         lineRenderer.startColor = color;
         lineRenderer.endColor = color;
+    }
+
+    void CatchPlayer()
+    {
+        if (playerHealth != null)
+        {
+            playerHealth.TakeDamage(playerHealth.currentHealth); // Reduce health to 0
+            Debug.Log("Mom caught the player. Player health is now 0.");
+        }
     }
 }

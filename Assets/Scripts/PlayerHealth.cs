@@ -1,63 +1,49 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;  // Add this to use SceneManager
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHealth = 100;      // Maximum health
-    public int currentHealth;       // Current health
-    public AudioClip deathSound;    // Reference to the AudioClip for the death sound
+    public int maxHealth = 100;
+    public int currentHealth;
+    public AudioClip deathSound;
+    public Vector3 soundPositionOffset = Vector3.zero;
 
-    public Vector3 soundPositionOffset = Vector3.zero; // Offset for where the sound plays (relative to player position)
+    private CountDown countDown;
 
     void Start()
     {
-        // Test: Play the death sound at the start to ensure it works
-        if (deathSound != null)
-        {
-            AudioSource.PlayClipAtPoint(deathSound, transform.position);
-        }
-        else
-        {
-            Debug.LogWarning("Death sound AudioClip is not assigned!");
-        }
-
-        currentHealth = maxHealth; // Set initial health to max
+        currentHealth = maxHealth;
+        countDown = FindObjectOfType<CountDown>(); // Find CountDown in the scene
     }
 
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Prevent health from going out of bounds
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
-        Debug.Log("Current Health: " + currentHealth); // Debug log to track health
+        Debug.Log("Current Health: " + currentHealth);
 
-        // Check if health reaches 0
         if (currentHealth == 0)
         {
             PlayDeathSound();
+            TriggerGameOver();  // Trigger game over when health reaches 0
         }
-    }
-
-    public void Heal(int amount)
-    {
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
 
     private void PlayDeathSound()
     {
-        if (deathSound != null) // Check if the AudioClip is assigned
+        if (deathSound != null)
         {
-            // Play the sound at the player's position + offset
             Vector3 playPosition = transform.position + soundPositionOffset;
             AudioSource.PlayClipAtPoint(deathSound, playPosition);
-
-            Debug.Log("Player health reached 0. Playing death sound.");
         }
-        else
+    }
+
+    private void TriggerGameOver()
+    {
+        if (countDown != null)
         {
-            Debug.LogWarning("Death sound AudioClip is not assigned!");
+            countDown.TriggerGameOver(); // Call GameOver from CountDown script
         }
     }
 }
