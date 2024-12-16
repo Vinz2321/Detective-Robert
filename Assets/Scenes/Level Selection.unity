@@ -444,7 +444,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -0.0000033379}
+  m_AnchoredPosition: {x: -22, y: -0.0000033379}
   m_SizeDelta: {x: 653.5872, y: 354.0928}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &536198556
@@ -490,7 +490,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxPage: 5
-  pageStep: {x: -750, y: 0, z: 0}
+  pageStep: {x: -2200, y: 0, z: 0}
   levelPagesRect: {fileID: 805499617}
   tweenTime: 0.3
   tweenType: 6
@@ -2048,7 +2048,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1195.7332, y: 628.2314}
+  m_SizeDelta: {x: 1252.8096, y: 628.2314}
   m_Pivot: {x: 0.5000002, y: 0.5}
 --- !u!114 &1942230403
 MonoBehaviour:
