@@ -159,8 +159,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000011444, y: -171}
-  m_SizeDelta: {x: 249.8216, y: 65.235}
+  m_AnchoredPosition: {x: -13.564, y: -354.4229}
+  m_SizeDelta: {x: 312.6937, y: 112.3891}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &396469717
 MonoBehaviour:
@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SceneName: LoadingScreen
-  buttonClickSound: {fileID: 0}
+  buttonClickSound: {fileID: 8300000, guid: 65e2b1f983118594a8c2e706d5aac06a, type: 3}
 --- !u!114 &396469718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -445,7 +445,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -561,8 +561,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 82}
-  m_SizeDelta: {x: 208.4726, y: 130.7302}
+  m_AnchoredPosition: {x: 0.00000023469, y: 115}
+  m_SizeDelta: {x: 510.2181, y: 356.0336}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1341958083
 MonoBehaviour:
@@ -636,8 +636,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0025177, y: -0.000015259}
-  m_SizeDelta: {x: 1096.5, y: 482.5}
+  m_AnchoredPosition: {x: 0.0099792, y: -0.0025024}
+  m_SizeDelta: {x: 2460, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1384259736
 MonoBehaviour:
@@ -737,11 +737,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 32
+    m_FontSize: 54
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 41
+    m_MaxSize: 55
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
