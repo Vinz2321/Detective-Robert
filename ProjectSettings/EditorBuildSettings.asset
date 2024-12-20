@@ -30,9 +30,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Stage 4.unity
     guid: f5b77065c05ba8e41aa5a53d1016eef0
   - enabled: 1
-    path: Assets/Scenes/Stage 5 floor 1.unity
-    guid: 9b396a1a3a56f3a49bd07539e6cc1d63
-  - enabled: 1
     path: Assets/Scenes/Level Selection.unity
     guid: 69479fe01490fdf4a846c71e8f6f8b3f
   - enabled: 1
@@ -71,4 +68,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Loading Screen 5.unity
     guid: 4b3fad47c9226804fab626bb02e0f7ee
+  - enabled: 1
+    path: Assets/Scenes/Stage 5 floor 1.unity
+    guid: 9b396a1a3a56f3a49bd07539e6cc1d63
+  - enabled: 1
+    path: Assets/Scenes/Stage 5 floor 2.unity
+    guid: e5e5c0707e0cefd47a9f8229fb3b057a
+  - enabled: 1
+    path: Assets/Scenes/Stage 5 floor 3.unity
+    guid: cfc942392702b214999a895c6da3196c
   m_configObjects: {}
