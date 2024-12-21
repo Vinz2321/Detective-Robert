@@ -60,8 +60,8 @@ public class PlayerMovement : MonoBehaviour
         // Update movement based on joystick input
         if (joystickScript != null)
         {
-            movement.x = Input.GetAxisRaw("Horizontal");
-            movement.y = Input.GetAxisRaw("Vertical");
+           movement.x = joystickScript.joystickVec.x;
+           movement.y = joystickScript.joystickVec.y; 
 
             animator.SetFloat("Horizontal", movement.x);
             animator.SetFloat("Vertical", movement.y);
