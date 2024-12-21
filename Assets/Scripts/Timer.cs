@@ -1,12 +1,18 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;  // Add this to use SceneManager
+
+using UnityEngine;
+using UnityEngine.UI; // For the UI Text
+using System;
 
 public class CountDown : MonoBehaviour
 {
-    [SerializeField] private float duration;
-    [SerializeField] private AudioSource startSound;
-    [SerializeField] private AudioSource endSound;
+    [SerializeField] private float duration;  // Total countdown duration in minutes
+    [SerializeField] private AudioSource startSound;  // Start sound
+    [SerializeField] private AudioSource endSound;  // End sound
+    [SerializeField] private Text countdownText;  // Reference to the UI Text for showing the countdown
 
     private static DateTime endTime;
     private static bool isCountingDown = false;
@@ -36,12 +42,19 @@ public class CountDown : MonoBehaviour
 
         if (remainingTime.TotalSeconds > 0)
         {
-            // Timer updates here if needed, or you can show remaining time in console
+            // Update the countdown display
+            UpdateCountdownText(remainingTime);
         }
         else
         {
             EndCountdown();
         }
+    }
+
+    private void UpdateCountdownText(TimeSpan remainingTime)
+    {
+        // Display the remaining time in minutes and seconds format
+        countdownText.text = string.Format("{0:D2}:{1:D2}", remainingTime.Minutes, remainingTime.Seconds);
     }
 
     private void EndCountdown()
@@ -78,6 +91,7 @@ public class CountDown : MonoBehaviour
     // Method to load the Game Over scene
     private void LoadGameOverScene()
     {
-        SceneManager.LoadScene("GameOver"); // Ensure "GameOver" is the correct scene name
+        // Make sure "GameOver" is the correct scene name
+        UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
     }
 }

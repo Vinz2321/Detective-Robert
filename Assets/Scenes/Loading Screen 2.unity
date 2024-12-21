@@ -761,7 +761,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loadBar: {fileID: 1032287738}
-  loadingCount: 0.0005
+  loadingCount: 0.0015
   sceneName: Stage 2
 --- !u!114 &1838912832
 MonoBehaviour:

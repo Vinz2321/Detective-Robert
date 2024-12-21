@@ -27,4 +27,19 @@ public class HealthBar : MonoBehaviour
             Debug.LogWarning("PlayerHealth reference is missing in the HealthBar script!");
         }
     }
+
+    // Public method to manually update the health bar (called from other scripts like Traps)
+    public void UpdateHealthBar()
+    {
+        if (playerHealth != null)
+        {
+            // Calculate the health percentage and update the fill image directly
+            float healthPercentage = (float)playerHealth.currentHealth / playerHealth.maxHealth;
+            fillImage.fillAmount = healthPercentage;
+        }
+        else
+        {
+            Debug.LogWarning("PlayerHealth reference is missing in the UpdateHealthBar method!");
+        }
+    }
 }
