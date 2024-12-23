@@ -45,6 +45,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Settings3.unity
     guid: 5b64566099f725d4496f099fc22c58dc
   - enabled: 1
+    path: Assets/Scenes/Settings.unity
+    guid: f2c7cebb438ea1542bbe3a48eb3677b8
+  - enabled: 1
     path: Assets/Scenes/Settings4.unity
     guid: 3e0f0bd855f500f4d94e6897ec55893c
   - enabled: 1
@@ -62,6 +65,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Loading Screen 3.unity
     guid: e89b49f696856554d887f225a8214382
+  - enabled: 1
+    path: Assets/Scenes/About Us.unity
+    guid: 32b3538a3d4a80848aeff092bef1f339
   - enabled: 1
     path: Assets/Scenes/Loading Screen 4.unity
     guid: 068c39fb478a895489bc862a00a47828

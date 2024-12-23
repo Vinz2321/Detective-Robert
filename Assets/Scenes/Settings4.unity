@@ -203,7 +203,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 960749440}
-  m_HandleRect: {fileID: 0}
+  m_HandleRect: {fileID: 1281193763}
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 308955596}
-  m_HandleRect: {fileID: 0}
+  m_HandleRect: {fileID: 213573293}
   m_Direction: 0
   m_MinValue: 0
   m_MaxValue: 1
@@ -334,10 +334,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1681429443}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -29.3919, y: -2.3475}
-  m_SizeDelta: {x: 72.9811, y: 92.282}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 12, y: -0.000030517578}
+  m_SizeDelta: {x: 85.2714, y: -10.8477}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &213573294
 MonoBehaviour:
@@ -427,7 +427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8980392, g: 0.62352943, b: 0.25882354, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -833,7 +833,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8962264, g: 0.62427855, b: 0.25787643, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -958,10 +958,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1857473452}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -235.39188, y: 5.195}
-  m_SizeDelta: {x: 72.9808, y: 86.587}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 15, y: 4.1707}
+  m_SizeDelta: {x: 85.954, y: -8.3413}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1281193764
 MonoBehaviour:
@@ -1193,6 +1193,7 @@ GameObject:
   - component: {fileID: 1646675947}
   - component: {fileID: 1646675946}
   - component: {fileID: 1646675945}
+  - component: {fileID: 1646675948}
   m_Layer: 5
   m_Name: lbl_exit
   m_TagString: Untagged
@@ -1263,10 +1264,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ButtonBehavior, Assembly-CSharp
-        m_MethodName: LoadScene
-        m_Mode: 5
+      - m_Target: {fileID: 1646675948}
+        m_TargetAssemblyTypeName: SceneChanger, Assembly-CSharp
+        m_MethodName: ChangeScene
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1313,6 +1314,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1646675943}
   m_CullTransparentMesh: 1
+--- !u!114 &1646675948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1646675943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ec18b5efefc3324fa846d66e5203601, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SceneName: Main Menu
+  buttonClickSound: {fileID: 0}
 --- !u!1 &1681429442
 GameObject:
   m_ObjectHideFlags: 0
