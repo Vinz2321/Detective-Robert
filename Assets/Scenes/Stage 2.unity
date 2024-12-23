@@ -1066,7 +1066,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1.9238205
+  orthographic size: 3.1173794
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -43310,7 +43310,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.31, y: 3.31}
+  m_Size: {x: 1.5, y: 1.5}
   m_EdgeRadius: 0
 --- !u!82 &1538534514
 AudioSource:
